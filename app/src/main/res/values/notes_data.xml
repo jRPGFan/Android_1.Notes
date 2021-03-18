@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="note_titles">
+        <item>Shopping List</item>
+        <item>Workouts</item>
+        <item>Shish kebab marinade recipe</item>
+    </string-array>
+    
+    <string-array name="note_contents">
+        <item>Chicken ~1kg \nFrozen veggies x3 \nSomething for the tea. Prunes?
+            \nFresh veggies for a salad \nRamsons? \nMilk \nOatmeal \nBananas</item>
+        <item>Need new routines. Maybe check out leap fitness apps?</item>
+        <item>Chicken 1kg:
+                \n- sunflower oil 2tbsp
+                \n- onions 350-400g
+                \n- soy sauce 2-3tbsp
+                \n- garlic clove x3-4
+                \n- black pepper
+                \n- sage
+                \n- rosemary
+                \n- lemon juice 2tbsp
+\n
+            \nPork 1kg:
+                \n- kefir. enough to drown the meat + 2 fingers high
+                \n- onions 600g
+                \n- soy sauce 2-3tbsp
+                \n- garlic clove x5
+                \n- black pepper
+                \n- sage
+                \n- rosemary
+\n
+            \nleave refrigerated overnight
+        </item>
+    </string-array>
+    <string-array name="note_creation_dates">
+        <item>2021-03-15 14:52:13</item>
+        <item>2021-03-07 17:21:02</item>
+        <item>2021-03-18 11:07:34</item>
+    </string-array>
+</resources>
