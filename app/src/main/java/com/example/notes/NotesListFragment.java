@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -42,12 +44,26 @@ public class NotesListFragment extends Fragment {
         initNoteList(view);
     }
 
+//    final Calendar myCalendar = Calendar.getInstance();
+//    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//        @Override
+//        public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                              int dayOfMonth) {
+//            // TODO Auto-generated method stub
+//            myCalendar.set(Calendar.YEAR, year);
+//            myCalendar.set(Calendar.MONTH, monthOfYear);
+//            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//        }
+//
+//    };
+
     @SuppressLint({"ResourceType", "RtlHardcoded"})
     public void initNoteList(View view) {
-        @SuppressLint("Recycle") TypedArray titlesArray = getResources().obtainTypedArray(R.array.note_titles);
-        @SuppressLint("Recycle") TypedArray contentsArray = getResources().obtainTypedArray(R.array.note_contents);
-        @SuppressLint("Recycle") TypedArray datesArray = getResources().obtainTypedArray(R.array.note_creation_dates);
-        //java.text.ParseException: Unparseable date: "07–03-2021 17:21:02"
+        TypedArray titlesArray = getResources().obtainTypedArray(R.array.note_titles);
+        TypedArray contentsArray = getResources().obtainTypedArray(R.array.note_contents);
+        TypedArray datesArray = getResources().obtainTypedArray(R.array.note_creation_dates);
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                 Locale.getDefault());
         notes = new Note[] {
@@ -101,6 +117,9 @@ public class NotesListFragment extends Fragment {
                 linearLayout.setPaddingRelative(0,20,0,0);
             }
         }
+        titlesArray.recycle();
+        contentsArray.recycle();
+        datesArray.recycle();
     }
 
     private void changeNoteDate(Note selectedNote) {
