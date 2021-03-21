@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -31,9 +32,20 @@ public class NoteFragment extends Fragment {
         TextView tvNoteCreationDate = view.findViewById(R.id.note_creation_date);
 
         tvNoteTitle.setText(note.getTitle());
+        tvNoteTitle.setOnClickListener(v -> {
+            Toast.makeText(getActivity(), "Edit Title", Toast.LENGTH_SHORT).show();
+        });
+
         tvNoteContents.setText(note.getContents());
+        tvNoteContents.setOnClickListener(v -> {
+            Toast.makeText(getActivity(), "Edit Items", Toast.LENGTH_SHORT).show();
+        });
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         tvNoteCreationDate.setText(String.format("%s", simpleDateFormat.format(note.getCreationDate().getTime())));
+        tvNoteCreationDate.setOnClickListener(v -> {
+            changeNoteDate(note);
+        });
 
         return view;
     }
@@ -44,5 +56,9 @@ public class NoteFragment extends Fragment {
         argsBundle.putParcelable(SELECTED_NOTE, note);
         noteFragment.setArguments(argsBundle);
         return noteFragment;
+    }
+
+    private void changeNoteDate(Note selectedNote) {
+        Toast.makeText(getActivity(), "Change Date", Toast.LENGTH_SHORT).show();
     }
 }

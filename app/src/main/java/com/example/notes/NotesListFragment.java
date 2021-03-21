@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,6 +83,7 @@ public class NotesListFragment extends Fragment {
 
         for (Note note : notes) {
             Context context = getContext();
+
             if (context != null) {
                 LinearLayout linearLayout = (LinearLayout) view;
                 TextView tvNoteTitle = new TextView(context);
@@ -104,11 +106,17 @@ public class NotesListFragment extends Fragment {
                 linearLayout.addView(tvNoteCreationDate);
 
                 tvNoteTitle.setPadding(0, 30, 0, 0);
+                tvNoteTitle.setOnClickListener(v -> {
+                    selectedNote = note;
+                    showNote(selectedNote);
+                });
+
                 tvNoteShortContents.setPadding(0,5,0,0);
                 tvNoteShortContents.setOnClickListener(v -> {
                     selectedNote = note;
                     showNote(selectedNote);
                 });
+
                 tvNoteCreationDate.setGravity(Gravity.RIGHT);
                 tvNoteCreationDate.setOnClickListener(v -> {
                     selectedNote = note;
@@ -117,36 +125,10 @@ public class NotesListFragment extends Fragment {
                 linearLayout.setPaddingRelative(0,20,0,0);
             }
         }
+
         titlesArray.recycle();
         contentsArray.recycle();
         datesArray.recycle();
-    }
-
-    private void changeNoteDate(Note selectedNote) {
-        //new DatePickerDialog()
-    }
-
-
-    private void showNote(Note selectedNote) {
-        if (isLandscape) {
-            showNoteInLandscape(selectedNote);
-        } else {
-            showNoteInPortrait(selectedNote);
-        }
-    }
-
-    private void showNoteInLandscape(Note selectedNote) {
-        NoteFragment noteFragment = NoteFragment.newInstance(selectedNote);
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.note_layout, noteFragment).
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-    }
-
-    private void showNoteInPortrait(Note selectedNote) {
-        Intent intent = new Intent(getActivity(), NoteActivity.class);
-        intent.putExtra(NoteFragment.SELECTED_NOTE, selectedNote);
-        startActivity(intent);
     }
 
     @Override
@@ -159,19 +141,34 @@ public class NotesListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
             selectedNote = savedInstanceState.getParcelable(NoteFragment.SELECTED_NOTE);
-        }
-
-            else {
-                selectedNote = notes[0];
-            }
+            else selectedNote = notes[0];
 
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) showNoteInLandscape(selectedNote);
+    }
 
-        if (isLandscape) {
-            showNoteInLandscape(selectedNote);
-        }
+    private void showNote(Note selectedNote) {
+        if (isLandscape) showNoteInLandscape(selectedNote);
+            else showNoteInPortrait(selectedNote);
+    }
+
+    private void showNoteInLandscape(Note selectedNote) {
+        NoteFragment noteFragment = NoteFragment.newInstance(selectedNote);
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.note_layout, noteFragment).
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+    }
+
+    private void showNoteInPortrait(Note selectedNote) {
+        NoteFragment fragment = NoteFragment.newInstance(selectedNote);
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack("notes_list_fragment");
+        fragmentTransaction.replace(R.id.notes_list_container, fragment).
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
     }
 
     public Date getDateFromString(String dateString, SimpleDateFormat simpleDateFormat){
@@ -183,5 +180,9 @@ public class NotesListFragment extends Fragment {
             ex.printStackTrace();
         }
         return date;
+    }
+
+    private void changeNoteDate(Note selectedNote) {
+        Toast.makeText(getActivity(), "Change Date", Toast.LENGTH_SHORT).show();
     }
 }
