@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/items_margin_start"
+    android:layout_marginEnd="@dimen/items_margin_end"
+    android:layout_marginTop="@dimen/items_padding_top"
+    android:layout_marginBottom="@dimen/items_margin_bottom"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+    <LinearLayout
+        android:id="@+id/note_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/items_margin_bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/card_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/items_margin_start"
+            android:layout_marginEnd="@dimen/items_margin_end"
+            android:textSize="@dimen/note_title_text_size"/>
+
+        <TextView
+            android:id="@+id/card_short_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/items_padding_top"
+            android:layout_marginStart="@dimen/items_margin_start"
+            android:layout_marginEnd="@dimen/items_margin_end"
+            android:textSize="@dimen/note_contents_text_size"/>
+
+        <TextView
+            android:id="@+id/card_creation_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/items_padding_top"
+            android:layout_marginStart="@dimen/items_margin_start"
+            android:layout_marginEnd="@dimen/items_margin_end"
+            android:textSize="@dimen/note_date_text_size"
+            android:gravity="right"
+            tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
