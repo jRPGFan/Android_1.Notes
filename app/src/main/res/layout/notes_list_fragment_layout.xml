@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,4 +7,10 @@
     android:orientation="vertical"
     android:layout_marginStart="@dimen/items_margin_start"
     tools:ignore="RtlSymmetry">
-</LinearLayout>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notes_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/recycler_note_card"/>
+</FrameLayout>

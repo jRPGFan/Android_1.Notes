@@ -9,20 +9,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.notes.observe.Publisher;
+import com.example.notes.ui.EditNoteFragment;
+import com.example.notes.ui.NotesListFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
-
     private DrawerLayout drawerLayout;
+    private Publisher publisher = new Publisher();
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
             return true;
         });
 
-        ImageView profilePictureView = (ImageView) sideNavigationView.getHeaderView(0).
+        ImageView profilePictureView = sideNavigationView.getHeaderView(0).
                 findViewById(R.id.user_photo);
         profilePictureView.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "Ha ha ha. What a story, Mark",
@@ -94,10 +96,12 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
 
         MenuItem searchNotes = menu.findItem(R.id.toolbar_menu_search);
         SearchView searchView = (SearchView) searchNotes.getActionView();
+        MenuItem addNote = menu.findItem(R.id.toolbar_menu_add_note);
         MenuItem sortNotes = menu.findItem(R.id.toolbar_menu_sort);
         MenuItem shareNote = menu.findItem(R.id.toolbar_menu_share);
         MenuItem attachPhoto = menu.findItem(R.id.toolbar_menu_add_photo);
 
+        addNote.setOnMenuItemClickListener(this);
         sortNotes.setOnMenuItemClickListener(this);
         shareNote.setOnMenuItemClickListener(this);
         attachPhoto.setOnMenuItemClickListener(this);
@@ -117,10 +121,26 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
-        return false;
+        switch (item.getItemId()){
+            case R.id.toolbar_menu_add_note:
+                EditNoteFragment editNoteFragment = EditNoteFragment.newInstance();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                boolean isPortrait = getResources().getConfiguration().orientation ==
+                        Configuration.ORIENTATION_PORTRAIT;
+                if (isPortrait) {
+                    fragmentTransaction.addToBackStack("note_fragment");
+                    fragmentTransaction.replace(R.id.notes_list_container, editNoteFragment).
+                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+                } else fragmentTransaction.replace(R.id.note_layout, editNoteFragment).
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+            default:
+                Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                return false;
+        }
     }
 
     @Override
@@ -130,5 +150,9 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         } else {
             super.onBackPressed();
         }
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
     }
 }

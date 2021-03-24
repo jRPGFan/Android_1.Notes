@@ -8,27 +8,34 @@
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="1"
         app:actionViewClass="android.widget.SearchView"
-        android:title="@string/search_notes"
+        android:title="@string/toolbar_search_notes"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toolbar_menu_add_note"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="1"
+        app:actionViewClass="android.widget.SearchView"
+        android:title="@string/toolbar_add_note"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/toolbar_menu_sort"
         android:icon="@android:drawable/ic_menu_sort_alphabetically"
-        android:orderInCategory="1"
-        android:title="@string/sort_notes"
+        android:orderInCategory="2"
+        android:title="@string/toolbar_sort_notes"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/toolbar_menu_share"
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="2"
-        android:title="@string/share_note"
+        android:title="@string/toolbar_share_note"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/toolbar_menu_add_photo"
         android:icon="@android:drawable/btn_plus"
         android:orderInCategory="2"
-        android:title="@string/add_note_photo"
+        android:title="@string/toolbar_add_note_photo"
         app:showAsAction="ifRoom" />
 </menu>
