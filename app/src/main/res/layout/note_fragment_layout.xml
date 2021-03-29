@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/note_fragment_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/items_margin_start"
+    android:layout_marginEnd="@dimen/items_margin_end"
+    tools:ignore="RtlSymmetry">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/items_padding_top">
+
+        <TextView
+            android:id="@+id/note_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/note_title_text_size"
+            android:gravity="left"
+            android:layout_weight="9"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageButton
+            android:id="@+id/edit_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_weight="1"
+            android:background="@color/transparent"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/note_contents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/note_contents_text_size"
+        android:layout_marginTop="@dimen/items_padding_top"
+        android:gravity="left"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/note_creation_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/items_padding_top"
+        android:textSize="@dimen/note_date_text_size"
+        android:gravity="right"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>
