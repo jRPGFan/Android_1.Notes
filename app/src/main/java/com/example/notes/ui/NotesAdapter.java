@@ -1,7 +1,9 @@
 package com.example.notes.ui;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +28,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     private final Fragment fragment;
     private OnItemClickListener itemClickListener;
     private int menuPosition;
+    private float touchPositionX;
+    private float touchPositionY;
 
     public NotesAdapter(CardSource notes, Fragment fragment) {
         this.notes = notes;
@@ -67,6 +71,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         private TextView tvCardShortContents;
         private TextView tvCardCreationDate;
 
+        @SuppressLint("ClickableViewAccessibility")
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
@@ -81,9 +86,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                     itemClickListener.onItemClick(v, getAdapterPosition());
             });
 
+            itemView.setOnTouchListener((view, motionEvent) -> {
+                touchPositionX = motionEvent.getX();
+                touchPositionY = motionEvent.getY();
+                return false;
+            });
+
             itemView.setOnLongClickListener(v -> {
                 menuPosition = getLayoutPosition();
-                itemView.showContextMenu(10, 10);
+                itemView.showContextMenu(touchPositionX, touchPositionY);
                 return true;
             });
         }
@@ -107,7 +118,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             noteContents = noteContents.length() > 100 ?
                     noteContents.substring(0, 97) + "..." : noteContents;
             tvCardShortContents.setText(noteContents);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy",
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                     Locale.getDefault());
             tvCardCreationDate.setText(simpleDateFormat.format(noteData.
                     getCreationDate().getTime()));

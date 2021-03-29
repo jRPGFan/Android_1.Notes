@@ -10,11 +10,11 @@
         app:actionViewClass="android.widget.SearchView"
         android:title="@string/toolbar_search_notes"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/toolbar_menu_add_note"
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="1"
-        app:actionViewClass="android.widget.SearchView"
         android:title="@string/toolbar_add_note"
         app:showAsAction="ifRoom" />
 

@@ -19,12 +19,15 @@ import android.widget.Toast;
 
 import com.example.notes.observe.Publisher;
 import com.example.notes.ui.EditNoteFragment;
+import com.example.notes.ui.NotesAdapter;
 import com.example.notes.ui.NotesListFragment;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Publisher publisher = new Publisher();
+//    private NotesAdapter adapter;
+//    private NotesListFragment notesListFragment;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -85,63 +88,69 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
     private void initNotesList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //notesListFragment = new NotesListFragment();
         NotesListFragment notesListFragment = new NotesListFragment();
         fragmentTransaction.add(R.id.notes_list_container, notesListFragment);
         fragmentTransaction.commit();
+        //adapter = notesListFragment.getAdapter();
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
-
-        MenuItem searchNotes = menu.findItem(R.id.toolbar_menu_search);
-        SearchView searchView = (SearchView) searchNotes.getActionView();
-        MenuItem addNote = menu.findItem(R.id.toolbar_menu_add_note);
-        MenuItem sortNotes = menu.findItem(R.id.toolbar_menu_sort);
-        MenuItem shareNote = menu.findItem(R.id.toolbar_menu_share);
-        MenuItem attachPhoto = menu.findItem(R.id.toolbar_menu_add_photo);
-
-        addNote.setOnMenuItemClickListener(this);
-        sortNotes.setOnMenuItemClickListener(this);
-        shareNote.setOnMenuItemClickListener(this);
-        attachPhoto.setOnMenuItemClickListener(this);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-        });
-        return true;
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.toolbar_menu_add_note:
-                EditNoteFragment editNoteFragment = EditNoteFragment.newInstance();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                boolean isPortrait = getResources().getConfiguration().orientation ==
-                        Configuration.ORIENTATION_PORTRAIT;
-                if (isPortrait) {
-                    fragmentTransaction.addToBackStack("note_fragment");
-                    fragmentTransaction.replace(R.id.notes_list_container, editNoteFragment).
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-                } else fragmentTransaction.replace(R.id.note_layout, editNoteFragment).
-                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-            default:
-                Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
-                return false;
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
+//
+//        MenuItem searchNotes = menu.findItem(R.id.toolbar_menu_search);
+//        SearchView searchView = (SearchView) searchNotes.getActionView();
+//        MenuItem addNote = menu.findItem(R.id.toolbar_menu_add_note);
+//        MenuItem sortNotes = menu.findItem(R.id.toolbar_menu_sort);
+//        MenuItem shareNote = menu.findItem(R.id.toolbar_menu_share);
+//        MenuItem attachPhoto = menu.findItem(R.id.toolbar_menu_add_photo);
+//
+//        addNote.setOnMenuItemClickListener(this);
+//        sortNotes.setOnMenuItemClickListener(this);
+//        shareNote.setOnMenuItemClickListener(this);
+//        attachPhoto.setOnMenuItemClickListener(this);
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return true;
+//            }
+//        });
+//        return true;
+//    }
+//
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.toolbar_menu_add_note:
+//                EditNoteFragment editNoteFragment = EditNoteFragment.newInstance();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                boolean isPortrait = getResources().getConfiguration().orientation ==
+//                        Configuration.ORIENTATION_PORTRAIT;
+//                if (isPortrait) {
+//                    fragmentTransaction.addToBackStack("note_fragment");
+//                    fragmentTransaction.replace(R.id.notes_list_container, editNoteFragment).
+//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+//                } else fragmentTransaction.add(R.id.note_layout, editNoteFragment).
+//                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+//                adapter.notifyItemInserted(adapter.getItemCount() - 1);
+//                break;
+//            default:
+//                Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+//                return false;
+//        }
+//        return false;
+//    }
 
     @Override
     public void onBackPressed() {

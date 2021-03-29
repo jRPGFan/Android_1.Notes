@@ -64,9 +64,7 @@ public class CardSourceImplementation implements CardSource {
     }
 
     @Override
-    public void updateNoteData(int position, Note noteData) {
-        dataSource.set(position, noteData);
-    }
+    public void updateNoteData(int position, Note noteData) { dataSource.set(position, noteData); }
 
     @Override
     public void addNoteData(Note noteData) {

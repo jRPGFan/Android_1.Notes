@@ -76,8 +76,11 @@ public class NoteFragment extends Fragment {
             fragmentTransaction.addToBackStack("note_fragment");
             fragmentTransaction.replace(R.id.notes_list_container, editNoteFragment).
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-        } else fragmentTransaction.replace(R.id.note_layout, editNoteFragment).
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+        } else {
+            fragmentTransaction.addToBackStack("note_layout");
+            fragmentTransaction.replace(R.id.note_layout, editNoteFragment).
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+        }
     }
 
     public static NoteFragment newInstance(Note note) {

@@ -14,5 +14,7 @@
     <string name="cancel_edit_button">Cancel</string>
     <string name="choose_header_color">Choose header color:</string>
     <string name="toolbar_add_note">Add Note</string>
+    <string name="context_menu_update_note">Update</string>
+    <string name="context_menu_delete_note">Delete</string>
 
 </resources>

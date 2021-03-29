@@ -11,6 +11,9 @@ public class Note implements Parcelable {
     private Date creationDate;
     private String headerColor;
 
+    public Note(){
+
+    }
     public Note (String title, String contents, Date creationDate, String headerColor){
         this.title = title;
         this.contents = contents;

@@ -26,11 +26,13 @@ import com.example.notes.observe.Publisher;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
 public class EditNoteFragment extends Fragment {
     static final String SELECTED_NOTE = "Selected_Note";
+//    private static boolean edit;
     private Note note;
     private Publisher publisher;
 
@@ -80,6 +82,7 @@ public class EditNoteFragment extends Fragment {
         initView(view);
         initCalendar();
         if (note != null) populateView();
+            else setDateTime();
         return view;
     }
 
@@ -99,6 +102,8 @@ public class EditNoteFragment extends Fragment {
 
         Button saveNoteEdit = view.findViewById(R.id.save_note_edit);
         Button cancelNoteEdit = view.findViewById(R.id.cancel_note_edit);
+
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
         tvNoteDate.setOnClickListener(v -> pickDate());
         ibDatePicker.setOnClickListener(v -> pickDate());
@@ -138,13 +143,21 @@ public class EditNoteFragment extends Fragment {
         headerColor = note.getHeaderColor();
         etEditNoteTitle.setBackgroundColor(Color.parseColor(headerColor));
         etEditNoteContents.setText(note.getContents());
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String noteDateTime = simpleDateFormat.format(note.getCreationDate().getTime());
         tvNoteDate.setText(String.format("%s", noteDateTime.substring(0, noteDateTime.indexOf(" "))));
         tvNoteTime.setText(String.format("%s", noteDateTime.substring(noteDateTime.indexOf(" ") + 1)));
     }
 
+    @SuppressLint("ResourceType")
+    private void setDateTime() {
+        String currentDateTime = simpleDateFormat.format(new Date());
+        tvNoteDate.setText(currentDateTime.substring(0, currentDateTime.indexOf(" ")));
+        tvNoteTime.setText(currentDateTime.substring(currentDateTime.indexOf(" ") + 1));
+        headerColor = getResources().getString(R.color.white);
+    }
+
     public static EditNoteFragment newInstance(Note note) {
+//        edit = true;
         EditNoteFragment editNoteFragment = new EditNoteFragment();
         Bundle argsBundle = new Bundle();
         argsBundle.putParcelable(SELECTED_NOTE, note);
@@ -153,6 +166,7 @@ public class EditNoteFragment extends Fragment {
     }
 
     public static EditNoteFragment newInstance() {
+//        edit = false;
         return new EditNoteFragment();
     }
 
@@ -217,11 +231,12 @@ public class EditNoteFragment extends Fragment {
     }
 
     private void saveNoteEdit() {
+        if (note == null) note = new Note();
         note.setTitle(etEditNoteTitle.getText().toString());
         note.setContents(etEditNoteContents.getText().toString());
         try {
-            note.setCreationDate(simpleDateFormat.parse(String.format("%s %s", tvNoteDate.getText(),
-                    tvNoteTime.getText())));
+            note.setCreationDate(simpleDateFormat.parse(String.format("%s %s",
+                    tvNoteDate.getText().toString(), tvNoteTime.getText().toString())));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -229,6 +244,7 @@ public class EditNoteFragment extends Fragment {
         publisher.notify(note);
 
         Toast.makeText(getContext(), "Note Saved", Toast.LENGTH_SHORT).show();
-        Objects.requireNonNull(getActivity()).onBackPressed();
+//        Objects.requireNonNull(getActivity()).onBackPressed();
+        getFragmentManager().popBackStackImmediate();
     }
 }
