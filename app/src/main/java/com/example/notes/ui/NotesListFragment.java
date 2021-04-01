@@ -1,10 +1,8 @@
 package com.example.notes.ui;
 
-import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,18 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.Data.CardSource;
 import com.example.notes.Data.CardSourceFirebaseImplementation;
-import com.example.notes.Data.CardSourceImplementation;
-import com.example.notes.Data.CardsSourceResponse;
 import com.example.notes.Data.Note;
 import com.example.notes.MainActivity;
 import com.example.notes.R;
-import com.example.notes.observe.Observer;
 import com.example.notes.observe.Publisher;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class NotesListFragment extends Fragment {

@@ -16,5 +16,7 @@
     <string name="toolbar_add_note">Add Note</string>
     <string name="context_menu_update_note">Update</string>
     <string name="context_menu_delete_note">Delete</string>
+    <string name="continue_button_text">Continue</string>
+    <string name="sign_out_button">Sign out</string>
 
 </resources>

@@ -9,18 +9,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.notes.observe.Publisher;
-import com.example.notes.ui.EditNoteFragment;
-import com.example.notes.ui.NotesAdapter;
-import com.example.notes.ui.NotesListFragment;
+import com.example.notes.ui.AuthenticationFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mainToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mainToolbar);
 
-        if (savedInstanceState == null) initNotesList();
+        if (savedInstanceState == null) initSignIn();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,
@@ -85,15 +79,20 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-    private void initNotesList() {
+//    private void initNotesList() {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        NotesListFragment notesListFragment = new NotesListFragment();
+//        fragmentTransaction.add(R.id.notes_list_container, notesListFragment);
+//        fragmentTransaction.commit();
+//    }
+
+    private void initSignIn(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //notesListFragment = new NotesListFragment();
-        NotesListFragment notesListFragment = new NotesListFragment();
-        fragmentTransaction.add(R.id.notes_list_container, notesListFragment);
+        AuthenticationFragment authenticationFragment = new AuthenticationFragment();
+        fragmentTransaction.add(R.id.notes_list_container, authenticationFragment);
         fragmentTransaction.commit();
-        //adapter = notesListFragment.getAdapter();
-
     }
 
 //    @Override
