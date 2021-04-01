@@ -1,8 +1,7 @@
 package com.example.notes.Data;
 
-import com.example.notes.Data.Note;
-
 public interface CardSource {
+    CardSource init(CardsSourceResponse cardsSourceResponse);
     Note getNoteData(int position);
     int size();
     void deleteNoteData(int position);

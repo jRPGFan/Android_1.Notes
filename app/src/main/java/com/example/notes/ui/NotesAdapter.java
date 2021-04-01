@@ -24,16 +24,20 @@ import java.util.Locale;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private final static String TAG = "NotesAdapter";
-    private final CardSource notes;
+    private CardSource notes;
     private final Fragment fragment;
     private OnItemClickListener itemClickListener;
     private int menuPosition;
     private float touchPositionX;
     private float touchPositionY;
 
-    public NotesAdapter(CardSource notes, Fragment fragment) {
-        this.notes = notes;
+    public NotesAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setCardSource(CardSource notes){
+        this.notes = notes;
+        notifyDataSetChanged();
     }
 
     @NonNull

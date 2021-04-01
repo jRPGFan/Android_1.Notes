@@ -23,8 +23,8 @@
             android:id="@+id/card_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/items_margin_start"
-            android:layout_marginEnd="@dimen/items_margin_end"
+            android:paddingStart="@dimen/item_text_padding_start"
+            android:paddingEnd="@dimen/item_text_padding_end"
             android:textSize="@dimen/note_title_text_size"/>
 
         <TextView
@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/items_padding_top"
-            android:layout_marginStart="@dimen/items_margin_start"
-            android:layout_marginEnd="@dimen/items_margin_end"
+            android:paddingStart="@dimen/item_text_padding_start"
+            android:paddingEnd="@dimen/item_text_padding_end"
             android:textSize="@dimen/note_contents_text_size"/>
 
         <TextView
@@ -41,8 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/items_padding_top"
-            android:layout_marginStart="@dimen/items_margin_start"
-            android:layout_marginEnd="@dimen/items_margin_end"
+            android:paddingStart="@dimen/item_text_padding_start"
+            android:paddingEnd="@dimen/item_text_padding_end"
             android:textSize="@dimen/note_date_text_size"
             android:gravity="right"
             tools:ignore="RtlHardcoded" />

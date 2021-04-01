@@ -21,7 +21,7 @@ public class CardSourceImplementation implements CardSource {
         this.resources = resources;
     }
 
-    public CardSourceImplementation init(){
+    public CardSourceImplementation init(CardsSourceResponse cardsSourceResponse){
         String[] titles = resources.getStringArray(R.array.note_titles);
         String[] contents = resources.getStringArray(R.array.note_contents);
         String[] creationDates = resources.getStringArray(R.array.note_creation_dates);
@@ -34,6 +34,10 @@ public class CardSourceImplementation implements CardSource {
         for (int i = 0; i < titles.length; i++) {
             dataSource.add(new Note(titles[i], contents[i],
                     getDateFromString(creationDates[i], simpleDateFormat), headerColors[i]));
+        }
+
+        if (cardsSourceResponse != null ){
+            cardsSourceResponse.initialized( this );
         }
 
         return this;
