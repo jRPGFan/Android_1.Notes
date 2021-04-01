@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/lisa"
+            android:icon="@drawable/lisa"
+            android:title="@string/lisa" />
+        <item
+            android:id="@+id/side_menu_settings"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/side_menu_settings" />
+        <item
+            android:id="@+id/side_menu_about"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/side_menu_about" />
+    </group>
+
+</menu>
