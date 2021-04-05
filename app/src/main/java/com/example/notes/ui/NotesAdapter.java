@@ -55,7 +55,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return notes.size();
+        return notes.getSize();
     }
 
     public void SetOnItemClickListener(OnItemClickListener itemClickListener) {

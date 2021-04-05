@@ -58,7 +58,7 @@ public class CardSourceImplementation implements CardSource {
     }
 
     @Override
-    public int size() {
+    public int getSize() {
         return dataSource.size();
     }
 

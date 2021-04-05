@@ -83,6 +83,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/items_margin_start"
                 android:layout_marginTop="@dimen/items_padding_top"
                 android:text="@string/choose_header_color"
                 android:textSize="@dimen/header_color_text_size"/>
@@ -91,6 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/items_margin_bottom"
+                android:paddingStart="@dimen/items_margin_start"
+                android:layout_marginStart="@dimen/items_margin_start"
                 android:orientation="horizontal">
 
                 <Button
@@ -135,6 +138,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/items_padding_top"
+        android:layout_marginStart="@dimen/items_margin_start"
+        android:layout_marginEnd="@dimen/items_margin_end"
         android:orientation="horizontal"
         android:gravity="bottom">
 

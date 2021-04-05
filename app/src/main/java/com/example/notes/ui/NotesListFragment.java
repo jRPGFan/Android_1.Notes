@@ -1,6 +1,7 @@
 package com.example.notes.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.example.notes.Data.CardSourceFirebaseImplementation;
 import com.example.notes.Data.Note;
 import com.example.notes.MainActivity;
 import com.example.notes.R;
+import com.example.notes.observe.OnCreateEditNoteDialogListener;
 import com.example.notes.observe.Publisher;
 
 import java.text.SimpleDateFormat;
@@ -45,6 +47,7 @@ public class NotesListFragment extends Fragment {
     private EditNoteFragment editNoteFragment;
 //    private boolean moveToLastPosition;
     private boolean moveToFirstPosition;
+
 
     public static NotesListFragment newInstance() {
         return new NotesListFragment();
@@ -87,7 +90,7 @@ public class NotesListFragment extends Fragment {
 
     @SuppressLint("RtlHardcoded")
     private void initRecyclerView(RecyclerView recyclerView) {
-//        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -105,12 +108,7 @@ public class NotesListFragment extends Fragment {
         animator.setRemoveDuration(100);
         recyclerView.setItemAnimator(animator);
 
-//        if (moveToLastPosition) {
-//            recyclerView.smoothScrollToPosition(notes.size() - 1);
-//            moveToLastPosition = false;
-//        }
-
-        if (moveToFirstPosition && notes.size() > 0){
+        if (moveToFirstPosition && notes.getSize() > 0){
             recyclerView.scrollToPosition(0);
             moveToFirstPosition = false;
         }
@@ -121,8 +119,8 @@ public class NotesListFragment extends Fragment {
                 notes.updateNoteData(position, noteData);
                 adapter.notifyItemChanged(position);
                 moveToFirstPosition = false;
+                if (isLandscape) showNoteInLandscape(noteData);
             });
-
         });
     }
 
@@ -133,15 +131,26 @@ public class NotesListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState != null)
             selectedNote = savedInstanceState.getParcelable(NoteFragment.SELECTED_NOTE);
-            else if (notes != null && adapter.getItemCount() > 0) selectedNote = notes.getNoteData(0);
 
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         if (isLandscape) showNoteInLandscape(selectedNote);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+//        if (savedInstanceState != null)
+//            selectedNote = savedInstanceState.getParcelable(NoteFragment.SELECTED_NOTE);
+//            else if (notes != null)
+//                selectedNote = notes.getNoteData(0);
+//
+//        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+//        if (isLandscape) showNoteInLandscape(selectedNote);
     }
 
     @SuppressLint("ResourceType")
@@ -152,33 +161,6 @@ public class NotesListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.toolbar_menu_add_note:
-//                EditNoteFragment editNoteFragment = EditNoteFragment.newInstance();
-//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                boolean isPortrait = getResources().getConfiguration().orientation ==
-//                        Configuration.ORIENTATION_PORTRAIT;
-//                if (isPortrait) {
-//                    fragmentTransaction.addToBackStack("note_fragment");
-//                    fragmentTransaction.replace(R.id.notes_list_container, editNoteFragment).
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-//                } else {
-//                    fragmentTransaction.addToBackStack("note_layout");
-//                    fragmentTransaction.replace(R.id.note_layout, editNoteFragment).
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-//                }
-//                publisher.subscribe(noteData -> {
-//                    notes.addNoteData(noteData);
-//                    adapter.notifyItemInserted(notes.size() - 1);
-//                    moveToLastPosition = true;
-//                });
-//                adapter.notifyItemInserted(adapter.getItemCount() - 1);
-//                return true;
-//            default:
-//                Toast.makeText(getActivity(), item.getTitle().toString(), Toast.LENGTH_SHORT).show();
-//        }
-
         return onItemSelected(item.getItemId()) || super.onOptionsItemSelected(item);
     }
 
@@ -192,59 +174,75 @@ public class NotesListFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-//        final int position = adapter.getMenuPosition();
-//        switch (item.getItemId()) {
-//            case R.id.edit_note:
-//                EditNoteFragment editNoteFragment = EditNoteFragment.newInstance(notes.getNoteData(position));
-//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                boolean isPortrait = getResources().getConfiguration().orientation ==
-//                        Configuration.ORIENTATION_PORTRAIT;
-//                if (isPortrait) {
-//                    fragmentTransaction.addToBackStack("note_fragment");
-//                    fragmentTransaction.replace(R.id.notes_list_container, editNoteFragment).
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-//                } else {
-//                    fragmentTransaction.addToBackStack("note_layout");
-//                    fragmentTransaction.add(R.id.note_layout, editNoteFragment).
-//                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-//                }
-//                publisher.subscribe(noteData -> {
-//                    notes.updateNoteData(position, noteData);
-//                    adapter.notifyItemChanged(position);
-//                    moveToLastPosition = false;
-//                });
-//
-//                return true;
-//            case R.id.delete_note:
-//                notes.deleteNoteData(position);
-//                adapter.notifyItemRemoved(position);
-//                return true;
-//            default:
-//                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-//        }
         return onItemSelected(item.getItemId()) || super.onContextItemSelected(item);
     }
 
     @SuppressLint("NonConstantResourceId")
     private boolean onItemSelected(int menuItemId) {
         final int position = adapter.getMenuPosition();
+        publisher.unsubscribeAll();
         switch (menuItemId){
             case R.id.toolbar_menu_add_note:
-                editNoteFragment = EditNoteFragment.newInstance();
-                createEditNoteFragment();
+                EditNoteDialog addNoteDialog = EditNoteDialog.newInstance();
+                addNoteDialog.setOnDialogListener(new OnCreateEditNoteDialogListener() {
+                    @Override
+                    public void onDialogSave() {
+                        refreshRecyclerView();
+
+                        if (isLandscape) resetNoteLayout();
+
+                        Toast.makeText(getActivity(), "Note Added",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onDialogCancel() {
+                        Toast.makeText(getActivity(), "Cancelled",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                addNoteDialog.show(Objects.requireNonNull(getActivity()).
+                                getSupportFragmentManager(),
+                        "create_edit_note_dialog_fragment");
 
                 publisher.subscribe(noteData -> {
                     notes.addNoteData(noteData);
-                    adapter.notifyItemInserted(notes.size() - 1);
+                    adapter.notifyItemInserted(notes.getSize() - 1);
                     moveToFirstPosition = true;
                 });
-                adapter.notifyItemInserted(adapter.getItemCount() - 1);
+//                adapter.notifyItemInserted(adapter.getItemCount() - 1);
+//                adapter.notifyDataSetChanged();
+
+//                editNoteFragment = EditNoteFragment.newInstance();
+//                createEditNoteFragment();
+
+
                 return true;
 
             case R.id.edit_note:
-                editNoteFragment = EditNoteFragment.newInstance(notes.getNoteData(position));
-                createEditNoteFragment();
+//                editNoteFragment = EditNoteFragment.newInstance(notes.getNoteData(position));
+//                createEditNoteFragment();
+                EditNoteDialog editNoteDialog = EditNoteDialog.newInstance(notes.getNoteData(position));
+                editNoteDialog.setOnDialogListener(new OnCreateEditNoteDialogListener() {
+                    @Override
+                    public void onDialogSave() {
+                        refreshRecyclerView();
+
+                        Toast.makeText(getActivity(), "Note Edited",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onDialogCancel() {
+                        Toast.makeText(getActivity(), "Cancelled",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                editNoteDialog.show(Objects.requireNonNull(getActivity()).
+                                getSupportFragmentManager(),
+                        "create_edit_note_dialog_fragment");
+
                 publisher.subscribe(noteData -> {
                     notes.updateNoteData(position, noteData);
                     adapter.notifyItemChanged(position);
@@ -253,8 +251,23 @@ public class NotesListFragment extends Fragment {
                 return true;
 
             case R.id.delete_note:
-                notes.deleteNoteData(position);
-                adapter.notifyItemRemoved(position);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle(R.string.alert_dialog_warning).
+                        setMessage(R.string.alert_dialog_deletion_text).
+                        setCancelable(false).
+                        setNegativeButton(R.string.alert_dialog_button_no,
+                                (dialog, which) -> {
+
+                                }).
+                        setPositiveButton(R.string.alert_dialog_button_yes,
+                                (dialog, which) -> {
+                                    notes.deleteNoteData(position);
+                                    adapter.notifyItemRemoved(position);
+                                    if (isLandscape) resetNoteLayout();
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
                 return true;
 
             default:
@@ -285,8 +298,8 @@ public class NotesListFragment extends Fragment {
             else showNoteInPortrait(selectedNote);
     }
 
-    private void showNoteInLandscape(Note selectedNoten) {
-        if (selectedNote == null) return;;
+    private void showNoteInLandscape(Note selectedNote) {
+        if (selectedNote == null) return;
         NoteFragment noteFragment = NoteFragment.newInstance(selectedNote);
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -301,5 +314,24 @@ public class NotesListFragment extends Fragment {
         fragmentTransaction.addToBackStack("notes_list_fragment");
         fragmentTransaction.replace(R.id.notes_list_container, noteFragment).
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+    }
+
+    private void refreshRecyclerView(){
+        Fragment currentFragment = getActivity().getSupportFragmentManager().
+                findFragmentById(R.id.notes_list_container);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(currentFragment);
+        fragmentTransaction.attach(currentFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void resetNoteLayout(){
+        Fragment currentFragment = getActivity().getSupportFragmentManager().
+                findFragmentById(R.id.note_layout);
+        if (currentFragment != null) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.detach(currentFragment);
+            fragmentTransaction.commit();
+        }
     }
 }

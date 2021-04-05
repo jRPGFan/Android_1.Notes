@@ -18,5 +18,8 @@
     <string name="context_menu_delete_note">Delete</string>
     <string name="continue_button_text">Continue</string>
     <string name="sign_out_button">Sign out</string>
-
+    <string name="alert_dialog_warning">Warning!</string>
+    <string name="alert_dialog_deletion_text">Are you sure you want to delete this note?</string>
+    <string name="alert_dialog_button_yes">Yes</string>
+    <string name="alert_dialog_button_no">No</string>
 </resources>

@@ -27,7 +27,6 @@ public class CardSourceFirebaseImplementation implements CardSource{
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = firebaseFirestore.collection(CARDS);
     private List<Note> notes = new ArrayList<>();
-    private int notesSize = 0;
 
     @Override
     public CardSource init(CardsSourceResponse cardsSourceResponse) {
@@ -43,7 +42,6 @@ public class CardSourceFirebaseImplementation implements CardSource{
                             notes.add(note);
                         }
                         Log.d(TAG, "Successfully loaded " + notes.size() + " notes");
-                        notesSize = notes.size();
                         cardsSourceResponse.initialized(CardSourceFirebaseImplementation.this);
                     } else {
                         Log.d(TAG, "Failed to load. Reason: " + task.getException());
@@ -58,10 +56,10 @@ public class CardSourceFirebaseImplementation implements CardSource{
     }
 
     @Override
-    public int size() {
+    public int getSize() {
 //        if (notes == null) return 0;
 //        return notes.size();
-        return notesSize;
+        return notes.size();
     }
 
     @Override

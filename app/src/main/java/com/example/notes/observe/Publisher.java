@@ -20,6 +20,11 @@ public class Publisher {
         observers.remove(observer);
     }
 
+    public void unsubscribeAll(){
+        for (Observer observer : observers)
+            unsubscribe(observer);
+    }
+
     public void notify(Note noteData){
         for (Observer observer : observers){
             observer.updateNoteData(noteData);
